@@ -6,8 +6,9 @@ from tensorflow import keras
 from tensorflow.keras import layers
 import cv2
 import argparse
-from PIL import Image
 import os
+from PIL import Image
+import PIL.ImageOps
 
 def load_images_to_data(image_label, image_directory, features_data, label_data):
     list_of_files = os.listdir(image_directory)
@@ -68,14 +69,21 @@ def train():
     score = model.evaluate(x_test, y_test, verbose=0)
     test_examples = y_test.shape[0]
 
-    img = Image.open('skany/skany/Kinia/1.3.jpg').convert("L")
-    img = np.resize(img, (28, 28, 1))
-    im2arr = np.array(img)
-    im2arr = im2arr.reshape(1, 28, 28, 1)
-    y = model.predict_classes(im2arr)
-    print(y)
-    print("Test loss:", score[0])
-    print("Test accuracy:", score[1])
+    for i in range(0,10):
+        for j in range(0,4):
+            nazwa = 'skany/Kinia/' + str(i) + "." + str(j) + ".jpg"
+            img = Image.open(nazwa).convert("L")
+            inverted_image = PIL.ImageOps.invert(img)
+            inverted_image.save(nazwa.replace('jpg','png'))
+            img = Image.open(nazwa.replace('jpg','png')).convert("L")
+            img = np.resize(img, (28, 28, 1))
+            im2arr = np.array(img)
+            im2arr = im2arr.reshape(1, 28, 28, 1)
+            y = model.predict_classes(im2arr)
+            print(nazwa)
+            print(y)
+            print("Test loss:", score[0])
+            print("Test accuracy:", score[1])
 
     # detections = tf.math.argmax(y[:test_examples], 1)
     # true_values = tf.math.argmax(y_test[:test_examples], 1)
