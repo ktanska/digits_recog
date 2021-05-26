@@ -22,7 +22,7 @@ def train():
             img = np.resize(img, (28, 28, 1))
             im2arr = np.array(img)
             im2arr = im2arr.reshape(1, 28, 28, 1)
-            y = model.predict_classes(im2arr)
+            y = model.predict(im2arr).argmax(axis=1)
             print(nazwa)
             print(y)
             predictions.append(i)
@@ -38,7 +38,7 @@ def train():
             img = np.resize(img, (28, 28, 1))
             im2arr = np.array(img)
             im2arr = im2arr.reshape(1, 28, 28, 1)
-            y = model.predict_classes(im2arr)
+            y = model.predict(im2arr).argmax(axis=1)
             print(nazwa)
             print(y)
             predictions.append(i)
@@ -54,7 +54,7 @@ def train():
             img = np.resize(img, (28, 28, 1))
             im2arr = np.array(img)
             im2arr = im2arr.reshape(1, 28, 28, 1)
-            y = model.predict_classes(im2arr)
+            y = model.predict(im2arr).argmax(axis=1)
             print(nazwa)
             print(y)
             predictions.append(i)
@@ -67,8 +67,6 @@ def train():
     cmt = torch.zeros(10, 10, dtype=torch.int64)
     print(test)
     for p in test:
-        p[0] = p[0] - 1
-        p[1] = p[1] - 1
         tl, pl = p[0], p[1]
         cmt[tl, pl] = cmt[tl, pl] + 1
     print(cmt)
