@@ -1,3 +1,4 @@
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow import keras
@@ -12,13 +13,15 @@ from keras.preprocessing.image import load_img
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
 
+COLOR_GREEN = (0, 255, 0)
+
 def train():
     predictions = []
     references = []
     model = keras.models.load_model("mnist_model.h5")
     for i in range(0,10):
-        for j in range(1,4):
-            nazwa = 'skany/skany/Kinia/' + str(i) + "." + str(j) + ".jpg"
+        for j in range(1,5):
+            nazwa = 'skany/Kinia/' + str(i) + "." + str(j) + ".jpg"
             # img = Image.open(nazwa).convert("L")
             # #inverted_image = PIL.ImageOps.invert(img)
             # # inverted_image.save(nazwa.replace('jpg','png'))
@@ -27,67 +30,136 @@ def train():
             # im2arr = np.array(img)
             # im2arr = im2arr.reshape(1, 28, 28, 1)
             # load the image
-            img = load_img(nazwa, grayscale=True, target_size=(28, 28))
+            img1 = load_img(nazwa, grayscale=True, target_size=(28, 28))
             # convert to array
-            img = img_to_array(img)
+            arr = img_to_array(img1)
             # reshape into a single sample with 1 channel
-            img = img.reshape(1, 28, 28, 1)
+            arr = arr.reshape(1, 28, 28, 1)
             # prepare pixel data
-            img = img.astype('float32')
-            img = img / 255.0
-            y = model.predict(img).argmax(axis=1)
+            arr = arr.astype('float32')
+            arr = arr / 255.0
+            y = model.predict(arr).argmax(axis=1)
             print(nazwa)
             print(y)
+
+            # Change the size of output image
+            img1 = img1.resize((300, 300))
+
+            # Display the label
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            bottomLeftCornerOfText = (10, 250)
+            fontScale = 1
+            fontColor = (0, 0, 0)
+            lineType = 2
+
+            im = np.float32(img1)
+
+            cv2.putText(im, "Cyfra : " +str(y),
+                        bottomLeftCornerOfText,
+                        font,
+                        fontScale,
+                        fontColor,
+                        lineType)
+
+            # Save image
+            cv2.imwrite("skanyout/Kinia/"+str(i)+"."+str(j)+"_out.jpg", im)
+
             predictions.append(i)
             references.append(y)
 
-    for i in range(0,10):
-        for j in range(1,3):
-            nazwa = 'skany/skany/Ola/' + str(i) + "." + str(j) + ".jpg"
+    for i in range(0, 10):
+        for j in range(1, 4):
+            nazwa = 'skany/Ola/' + str(i) + "." + str(j) + ".jpg"
             # img = Image.open(nazwa).convert("L")
-            # # inverted_image = PIL.ImageOps.invert(img)
-            # # inverted_image.save(nazwa.replace('JPG','png'))
-            # # img = Image.open(nazwa.replace('JPG','png')).convert("L")
+            # #inverted_image = PIL.ImageOps.invert(img)
+            # # inverted_image.save(nazwa.replace('jpg','png'))
+            # # img = Image.open(nazwa.replace('jpg','png')).convert("L")
             # img = np.resize(img, (28, 28, 1))
             # im2arr = np.array(img)
             # im2arr = im2arr.reshape(1, 28, 28, 1)
             # load the image
-            img = load_img(nazwa, grayscale=True, target_size=(28, 28))
+            img1 = load_img(nazwa, grayscale=True, target_size=(28, 28))
             # convert to array
-            img = img_to_array(img)
+            arr = img_to_array(img1)
             # reshape into a single sample with 1 channel
-            img = img.reshape(1, 28, 28, 1)
+            arr = arr.reshape(1, 28, 28, 1)
             # prepare pixel data
-            img = img.astype('float32')
-            img = img / 255.0
-            y = model.predict(img).argmax(axis=1)
+            arr = arr.astype('float32')
+            arr = arr / 255.0
+            y = model.predict(arr).argmax(axis=1)
             print(nazwa)
             print(y)
+
+            # Change the size of output image
+            img1 = img1.resize((300, 300))
+
+            # Display the label
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            bottomLeftCornerOfText = (10, 250)
+            fontScale = 1
+            fontColor = (0, 0, 0)
+            lineType = 2
+
+            im = np.float32(img1)
+
+            cv2.putText(im, "Cyfra : " + str(y),
+                        bottomLeftCornerOfText,
+                        font,
+                        fontScale,
+                        fontColor,
+                        lineType)
+
+            # Save image
+            cv2.imwrite("skanyout/Ola/" + str(i) + "." + str(j) + "_out.jpg", im)
+
             predictions.append(i)
             references.append(y)
 
-    for i in range(0,10):
-        for j in range(1,8):
-            nazwa = 'skany/skany/Julka/' + str(i) + "." + str(j) + ".JPG"
+    for i in range(0, 10):
+        for j in range(1, 9):
+            nazwa = 'skany/Julka/' + str(i) + "." + str(j) + ".jpg"
             # img = Image.open(nazwa).convert("L")
-            # # inverted_image = PIL.ImageOps.invert(img)
-            # # inverted_image.save(nazwa.replace('JPG','png'))
-            # # img = Image.open(nazwa.replace('JPG','png')).convert("L")
+            # #inverted_image = PIL.ImageOps.invert(img)
+            # # inverted_image.save(nazwa.replace('jpg','png'))
+            # # img = Image.open(nazwa.replace('jpg','png')).convert("L")
             # img = np.resize(img, (28, 28, 1))
             # im2arr = np.array(img)
             # im2arr = im2arr.reshape(1, 28, 28, 1)
             # load the image
-            img = load_img(nazwa, grayscale=True, target_size=(28, 28))
+            img1 = load_img(nazwa, grayscale=True, target_size=(28, 28))
             # convert to array
-            img = img_to_array(img)
+            arr = img_to_array(img1)
             # reshape into a single sample with 1 channel
-            img = img.reshape(1, 28, 28, 1)
+            arr = arr.reshape(1, 28, 28, 1)
             # prepare pixel data
-            img = img.astype('float32')
-            img = img / 255.0
-            y = model.predict(img).argmax(axis=1)
+            arr = arr.astype('float32')
+            arr = arr / 255.0
+            y = model.predict(arr).argmax(axis=1)
             print(nazwa)
             print(y)
+
+            # Change the size of output image
+            img1 = img1.resize((300, 300))
+
+            # Display the label
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            bottomLeftCornerOfText = (10, 250)
+            fontScale = 1
+            fontColor = (0, 0, 0)
+            lineType = 2
+
+            im = np.float32(img1)
+
+            cv2.putText(im, "Cyfra : " + str(y),
+                        bottomLeftCornerOfText,
+                        font,
+                        fontScale,
+                        fontColor,
+                        lineType)
+
+            # Save image
+            cv2.imwrite("skanyout/Julka/" + str(i) + "." + str(j) + "_out.jpg", im)
+
             predictions.append(i)
             references.append(y)
 
@@ -138,6 +210,7 @@ def train():
     plt.clf()
 
 if __name__ == '__main__':
+    print(cv2.__version__)
     parser = argparse.ArgumentParser(description='Training')
     parser.add_argument('--train', '-t', default='False', help='train mode')
     args = parser.parse_args()
