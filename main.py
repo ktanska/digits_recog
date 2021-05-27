@@ -7,6 +7,10 @@ import PIL.ImageOps
 import torch.optim
 import torch.utils.data
 import itertools
+# make a prediction for a new image.
+from keras.preprocessing.image import load_img
+from keras.preprocessing.image import img_to_array
+from keras.models import load_model
 
 def train():
     predictions = []
@@ -15,14 +19,23 @@ def train():
     for i in range(0,10):
         for j in range(1,4):
             nazwa = 'skany/skany/Kinia/' + str(i) + "." + str(j) + ".jpg"
-            img = Image.open(nazwa).convert("L")
-            inverted_image = PIL.ImageOps.invert(img)
-            inverted_image.save(nazwa.replace('jpg','png'))
-            img = Image.open(nazwa.replace('jpg','png')).convert("L")
-            img = np.resize(img, (28, 28, 1))
-            im2arr = np.array(img)
-            im2arr = im2arr.reshape(1, 28, 28, 1)
-            y = model.predict(im2arr).argmax(axis=1)
+            # img = Image.open(nazwa).convert("L")
+            # #inverted_image = PIL.ImageOps.invert(img)
+            # # inverted_image.save(nazwa.replace('jpg','png'))
+            # # img = Image.open(nazwa.replace('jpg','png')).convert("L")
+            # img = np.resize(img, (28, 28, 1))
+            # im2arr = np.array(img)
+            # im2arr = im2arr.reshape(1, 28, 28, 1)
+            # load the image
+            img = load_img(nazwa, grayscale=True, target_size=(28, 28))
+            # convert to array
+            img = img_to_array(img)
+            # reshape into a single sample with 1 channel
+            img = img.reshape(1, 28, 28, 1)
+            # prepare pixel data
+            img = img.astype('float32')
+            img = img / 255.0
+            y = model.predict(img).argmax(axis=1)
             print(nazwa)
             print(y)
             predictions.append(i)
@@ -31,14 +44,23 @@ def train():
     for i in range(0,10):
         for j in range(1,3):
             nazwa = 'skany/skany/Ola/' + str(i) + "." + str(j) + ".jpg"
-            img = Image.open(nazwa).convert("L")
-            inverted_image = PIL.ImageOps.invert(img)
-            inverted_image.save(nazwa.replace('jpg','png'))
-            img = Image.open(nazwa.replace('jpg','png')).convert("L")
-            img = np.resize(img, (28, 28, 1))
-            im2arr = np.array(img)
-            im2arr = im2arr.reshape(1, 28, 28, 1)
-            y = model.predict(im2arr).argmax(axis=1)
+            # img = Image.open(nazwa).convert("L")
+            # # inverted_image = PIL.ImageOps.invert(img)
+            # # inverted_image.save(nazwa.replace('JPG','png'))
+            # # img = Image.open(nazwa.replace('JPG','png')).convert("L")
+            # img = np.resize(img, (28, 28, 1))
+            # im2arr = np.array(img)
+            # im2arr = im2arr.reshape(1, 28, 28, 1)
+            # load the image
+            img = load_img(nazwa, grayscale=True, target_size=(28, 28))
+            # convert to array
+            img = img_to_array(img)
+            # reshape into a single sample with 1 channel
+            img = img.reshape(1, 28, 28, 1)
+            # prepare pixel data
+            img = img.astype('float32')
+            img = img / 255.0
+            y = model.predict(img).argmax(axis=1)
             print(nazwa)
             print(y)
             predictions.append(i)
@@ -47,14 +69,23 @@ def train():
     for i in range(0,10):
         for j in range(1,8):
             nazwa = 'skany/skany/Julka/' + str(i) + "." + str(j) + ".JPG"
-            img = Image.open(nazwa).convert("L")
-            inverted_image = PIL.ImageOps.invert(img)
-            inverted_image.save(nazwa.replace('JPG','png'))
-            img = Image.open(nazwa.replace('JPG','png')).convert("L")
-            img = np.resize(img, (28, 28, 1))
-            im2arr = np.array(img)
-            im2arr = im2arr.reshape(1, 28, 28, 1)
-            y = model.predict(im2arr).argmax(axis=1)
+            # img = Image.open(nazwa).convert("L")
+            # # inverted_image = PIL.ImageOps.invert(img)
+            # # inverted_image.save(nazwa.replace('JPG','png'))
+            # # img = Image.open(nazwa.replace('JPG','png')).convert("L")
+            # img = np.resize(img, (28, 28, 1))
+            # im2arr = np.array(img)
+            # im2arr = im2arr.reshape(1, 28, 28, 1)
+            # load the image
+            img = load_img(nazwa, grayscale=True, target_size=(28, 28))
+            # convert to array
+            img = img_to_array(img)
+            # reshape into a single sample with 1 channel
+            img = img.reshape(1, 28, 28, 1)
+            # prepare pixel data
+            img = img.astype('float32')
+            img = img / 255.0
+            y = model.predict(img).argmax(axis=1)
             print(nazwa)
             print(y)
             predictions.append(i)

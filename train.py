@@ -59,8 +59,8 @@ def train():
 
     model.summary()
 
-    batch_size = 32
-    epochs = 20
+    batch_size = 8
+    epochs = 50
 
     model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
 
