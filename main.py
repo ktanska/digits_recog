@@ -18,7 +18,7 @@ COLOR_GREEN = (0, 255, 0)
 def train():
     predictions = []
     references = []
-    model = keras.models.load_model("mnist_model.h5")
+    model = keras.models.load_model("new_model.h5")
     for i in range(0,10):
         for j in range(1,5):
             nazwa = 'skany/Kinia/' + str(i) + "." + str(j) + ".jpg"
